@@ -4,22 +4,13 @@ import Dp from '../../Images/propic.jpg'
 import { BsChevronLeft } from "react-icons/bs";
 import { RiSendPlaneLine } from "react-icons/ri";
 import TextField from '@material-ui/core/TextField';
-import { v4 as uuidv4 } from 'uuid';
-import uuid from "uuid";
 import MessagesHistory from './MessageHistory'
+
 export default class ChatBox extends  Component{
 constructor(props){
     super(props)
     this.state={
-        sender:[
-            {
-                'message': 'dfsdfsd',
-                "messageId": "8",
-                type: "incoming",
-                
-              },
-         
-        ],
+      
         messages: [
         {id:'1',msg:'Hi Molly!', type:"outgoing"},
         {id:'2',msg:'Hey, how are you doing?', type:"incoming"},
@@ -30,7 +21,7 @@ constructor(props){
         {id:'7',msg:'Facebook is a social networking site',type:"outgoing"},
         ],
       
-       idd:[],
+     
        isEdit:false,
        messageId:null,
        message:""
@@ -40,7 +31,6 @@ constructor(props){
 }
 
 handleChange =(e)=>{
-console.log(e.target.value,"djfnksd")
  this.setState({
     message: e.target.value
  })
@@ -48,7 +38,6 @@ console.log(e.target.value,"djfnksd")
 
 handleSubmit =(e,msgId)=> {
 
-    console.log("dfslajhafjds",this.state.messages[msgId])
     const {isEdit,messages} = this.state;
     e.preventDefault();
     if (!this.state.message.length) {
@@ -115,7 +104,8 @@ render(){
                 placeholder="Type Your Message Here" 
                 value={this.state.message}
                 onChange={(e)=>this.handleChange(e)}/> 
-                <RiSendPlaneLine className="icons_fixng" onClick={(e)=> !this.state.isEdit ? this.handleSubmit(e) : this.handleSubmit(e,this.state.messageId)}/> 
+                <RiSendPlaneLine className="icons_fixng" 
+                onClick={(e)=> !this.state.isEdit ? this.handleSubmit(e) : this.handleSubmit(e,this.state.messageId)}/> 
             </div>
             </div>
          

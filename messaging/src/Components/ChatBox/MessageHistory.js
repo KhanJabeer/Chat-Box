@@ -7,7 +7,6 @@ export default class MessagesHistory extends Component {
  
 
     render() {
-        console.log(this.props.items,"sdjabvfsakjb")
       return(
 
        [].concat(this.props.items).map(item => (
