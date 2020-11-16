@@ -30,7 +30,10 @@ constructor(props){
         {id:'7',msg:'Facebook is a social networking site',type:"outgoing"},
         ],
       
-       idd:[]
+       idd:[],
+       isEdit:false,
+       messageId:null,
+       message:""
        
   
     }
@@ -43,11 +46,16 @@ console.log(e.target.value,"djfnksd")
  })
 }
 
-handleSubmit =(e,id)=> {
+handleSubmit =(e,msgId)=> {
+
+    console.log("dfslajhafjds",this.state.messages[msgId])
+    const {isEdit,messages} = this.state;
     e.preventDefault();
     if (!this.state.message.length) {
       return;
     }
+
+    if(!isEdit) {
     const newItem = {
     id: Date.now(),
     msg: this.state.message,
@@ -56,18 +64,29 @@ handleSubmit =(e,id)=> {
   
     this.setState(state => ({
       messages: state.messages.concat(newItem),
-      message: '',
+      message:""
      
     }));
+}else{
+
+    // edit msg
+       const edit = messages.find((message) => message.id === msgId)
+        edit.msg = this.state.message;
+
+        this.setState({message:"",isEdit:false})
+
+}
   
-    
-        // for (let i = 0; i < this.state.messages.length; i++) {
-        //     this.state.idd.push(
-        //         this.state.messages[i].id
-        //     )
-            console.log(newItem.id,"snfjsn")
+  
     }
    
+
+    handleClick = (id) => {
+        // find the clicked msg
+        const onemsg  = this.state.messages.find((message) => message.id === id)
+
+        this.setState({isEdit:true,message:onemsg.msg,messageId:onemsg.id})       
+    }
   
 
 
@@ -87,7 +106,7 @@ render(){
             </div>
 
             <div class="messages-history">
-            <MessagesHistory items={this.state.messages} />
+            <MessagesHistory items={this.state.messages} handleClick={this.handleClick} />
           </div>
         
             <div className="text_typing">
@@ -96,11 +115,12 @@ render(){
                 placeholder="Type Your Message Here" 
                 value={this.state.message}
                 onChange={(e)=>this.handleChange(e)}/> 
-                <RiSendPlaneLine className="icons_fixng" onClick={(e)=>this.handleSubmit(e)}/> 
+                <RiSendPlaneLine className="icons_fixng" onClick={(e)=> !this.state.isEdit ? this.handleSubmit(e) : this.handleSubmit(e,this.state.messageId)}/> 
             </div>
             </div>
          
         </div>
+        
     )
 }
 }
